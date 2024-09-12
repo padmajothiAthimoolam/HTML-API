@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoLocation</title>
+</head>
+<body>
+    <h1>Geolocation API</h1>
+    <button id="locator">Get Location</button>
+    
+</body>
+<script>
+    const locator= document.getElementById("locator");
+    locator.addEventListener('click', getLocation);
+    function getLocation () {
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+            locator.innerHTML = 'Geolocation is not available';
+        }
+    }
+
+    function success (postion) {
+        const lat = postion.coords.latitude;
+        const long = postion.coords.longitude;
+    
+        console.log(`latitude:${lat}, "longitude:" ${long}`);
+        const markup = `<a href="http://openstreetmap.org/#map/${lat}/${long}"> Your current position is Latitude: ${lat}, longtitude is: ${long}</a>`
+        locator.innerHTML =markup;
+    }
+     function error(err){
+        if(err.code ==1)
+            locator.innerHTML = "User denied the access";
+        else 
+            locator.innerHTML = "Not able to fetch the geolocation"
+     }
+</script>
+</html>
